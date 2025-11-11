@@ -1,12 +1,29 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { RouterModule } from '@angular/router';
+import { NgIconComponent, provideIcons } from '@ng-icons/core';
+import { AuthService } from '../core/services/auth.service';
+import { ListComponent } from './list/list.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-entity',
   standalone: true,
-  imports: [],
+  imports: [CommonModule, RouterModule, NgIconComponent],
+  providers: [],
   templateUrl: './entity.component.html',
   styleUrl: './entity.component.css'
 })
 export class EntityComponent {
+  sidebarOpen = true;
 
+  constructor(private authService: AuthService) {}
+
+  toogleSidebar() {
+    this.sidebarOpen = !this.sidebarOpen;
+  }
+
+  logout() {
+    this.authService.logout()
+  }
 }

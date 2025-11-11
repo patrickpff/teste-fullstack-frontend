@@ -1,1 +1,16 @@
-<p>entity works!</p>
+<div class="entity-layout">
+    <!-- Header -->
+    <header class="header">
+        <div class="logo">Administrator</div>
+        <button class="logout" (click)="logout()">
+            Exit
+        </button>
+    </header>
+
+    <!-- Content -->
+    <main class="content">
+        <section class="entity-section">
+            <router-outlet></router-outlet>
+        </section>
+    </main>
+</div>

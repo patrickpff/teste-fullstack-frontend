@@ -19,7 +19,7 @@ import { heroEye, heroEyeSlash } from '@ng-icons/heroicons/outline';
     NgIconComponent
   ],
   providers: [
-    AuthService,
+    // AuthService,
     provideIcons({heroEye, heroEyeSlash})
   ],
   templateUrl: './login.component.html',

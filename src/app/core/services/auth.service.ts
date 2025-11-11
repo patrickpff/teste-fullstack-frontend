@@ -46,8 +46,18 @@ export class AuthService {
     )
   }
 
+  logout() {
+    // TODO: implement logout
+  }
+
   private fetchUser(): Observable<User> {
-    return this.http.get<User>('/user').pipe(
+    const url = `${environment.apiUrl}/user`
+
+    return this.http.get<User>(url, {
+      headers: {
+        Authorization: `Bearer ${this.getToken()}`,
+      }
+    }).pipe(
       tap((user) => this.currentUserSubject.next(user))
     );
   }
