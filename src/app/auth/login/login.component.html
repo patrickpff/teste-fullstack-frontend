@@ -1,0 +1,26 @@
+<div class="login-container">
+    <div class="login-card">
+        <h2>Login</h2>
+
+        <form [formGroup]="loginForm" (ngSubmit)="submit()">
+            <div *ngIf="error" class="alert alert-error">{{ error }}</div>
+
+            <label for="email">E-mail</label>
+            <input id="email" type="email" formControlName="email" placeholder="Type in your e-mail" />
+
+            <label for="password">Password</label>
+            <div class="password-wrapper">
+                <input id="password" [type]="showPassword ? 'text' : 'password'" formControlName="password"
+                    placeholder="Type in your password" />
+
+                <button type="button" class="toogle-password" (click)="togglePassword()">
+                    {{ showPassword ? '🙈' : '👁️' }}
+                </button>
+            </div>
+
+            <button type="submit" [disabled]="loading">
+                {{ loading ? "Loading..." : "Login" }}
+            </button>
+        </form>
+    </div>
+</div>
