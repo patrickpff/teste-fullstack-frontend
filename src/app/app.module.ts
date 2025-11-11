@@ -5,6 +5,8 @@ import { AppRoutingModule } from "./app.routes";
 import { LoginComponent } from "./auth/login/login.component";
 import { HttpClientModule } from "@angular/common/http";
 import { CommonModule } from "@angular/common";
+import { NgIconsModule } from "@ng-icons/core";
+import { heroEye, heroLockClosed } from '@ng-icons/heroicons/outline';
 
 @NgModule({
     declarations: [
@@ -15,7 +17,7 @@ import { CommonModule } from "@angular/common";
         BrowserModule,
         AppRoutingModule,
         HttpClientModule,
-        CommonModule,
+        CommonModule
     ],
     providers: [],
     bootstrap: [AppComponent]

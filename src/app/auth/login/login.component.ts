@@ -6,6 +6,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
+import { NgIconComponent, provideIcons } from '@ng-icons/core';
+import { heroEye, heroEyeSlash } from '@ng-icons/heroicons/outline';
 
 @Component({
   selector: 'app-login',
@@ -13,9 +15,13 @@ import { HttpClientModule } from '@angular/common/http';
   imports: [
     CommonModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgIconComponent
   ],
-  providers: [AuthService],
+  providers: [
+    AuthService,
+    provideIcons({heroEye, heroEyeSlash})
+  ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
@@ -31,7 +37,7 @@ export class LoginComponent {
     private router: Router
   ) {
     this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
+      username: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
     });
   }
@@ -41,14 +47,16 @@ export class LoginComponent {
   }
 
   submit() {
-    if (this.loginForm.invalid) return;
-    
+    if (this.loginForm.invalid) {
+      this.loginForm.markAllAsTouched();
+      return;
+    }
     this.loading = true;
     this.error = null;
 
-    const {email, password} = this.loginForm.value;
+    const {username, password} = this.loginForm.value;
     
-    this.authService.login(email, password).subscribe({
+    this.authService.login(username, password).subscribe({
       next: () => this.router.navigate(['/entity']),
       error: (err) => {
         if (err.error?.message) {

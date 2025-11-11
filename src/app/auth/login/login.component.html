@@ -5,8 +5,13 @@
         <form [formGroup]="loginForm" (ngSubmit)="submit()">
             <div *ngIf="error" class="alert alert-error">{{ error }}</div>
 
-            <label for="email">E-mail</label>
-            <input id="email" type="email" formControlName="email" placeholder="Type in your e-mail" />
+            <label for="username">E-mail</label>
+            <input id="username" type="username" formControlName="username" placeholder="Type in your e-mail" />
+
+            <div class="error-message" *ngIf="loginForm.get('username')?.touched && loginForm.get('username')?.invalid">
+                <small *ngIf="loginForm.get('username')?.errors?.['required']">E-mail is required.</small>
+                <small *ngIf="loginForm.get('username')?.errors?.['username']">Invalid E-mail format.</small>
+            </div>
 
             <label for="password">Password</label>
             <div class="password-wrapper">
@@ -14,8 +19,13 @@
                     placeholder="Type in your password" />
 
                 <button type="button" class="toogle-password" (click)="togglePassword()">
-                    {{ showPassword ? '🙈' : '👁️' }}
+                    <ng-icon name="heroEyeSlash" *ngIf="showPassword"></ng-icon>
+                    <ng-icon name="heroEye" *ngIf="!showPassword"></ng-icon>
                 </button>
+            </div>
+
+            <div class="error-message" *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid">
+                <small *ngIf="loginForm.get('password')?.errors?.['required']">Password is required.</small>
             </div>
 
             <button type="submit" [disabled]="loading">

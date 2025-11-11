@@ -13,14 +13,14 @@ interface AuthResponse {
 export interface User {
   id: number;
   name: string;
-  email: string;
+  username: string;
 }
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = environment.apiUrl + '/api/auth/token';
+  private apiUrl = environment.apiUrl + '/auth/token';
 
   // User state in memory
   private currentUserSubject = new BehaviorSubject<User | null>(null);
@@ -31,9 +31,9 @@ export class AuthService {
 
   constructor(private http: HttpClient) {}
 
-  login(email: string, password: string): Observable<AuthResponse> {
+  login(username: string, password: string): Observable<AuthResponse> {
     const body = {
-      email,
+      username,
       password
     }
 
@@ -47,7 +47,7 @@ export class AuthService {
   }
 
   private fetchUser(): Observable<User> {
-    return this.http.get<User>('/api/user').pipe(
+    return this.http.get<User>('/user').pipe(
       tap((user) => this.currentUserSubject.next(user))
     );
   }
