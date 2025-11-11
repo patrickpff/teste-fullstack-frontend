@@ -8,6 +8,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { heroEye, heroEyeSlash } from '@ng-icons/heroicons/outline';
+import { filter, switchMap, take } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +20,6 @@ import { heroEye, heroEyeSlash } from '@ng-icons/heroicons/outline';
     NgIconComponent
   ],
   providers: [
-    // AuthService,
     provideIcons({heroEye, heroEyeSlash})
   ],
   templateUrl: './login.component.html',
@@ -56,13 +56,20 @@ export class LoginComponent {
 
     const {username, password} = this.loginForm.value;
     
-    this.authService.login(username, password).subscribe({
-      next: () => this.router.navigate(['/entity']),
+    this.authService.login(username, password).pipe(
+      switchMap(() => this.authService.token$.pipe(
+        filter((token): token is string => !!token),
+        take(1)
+      ))
+    ).subscribe({
+      next: () => {
+        this.router.navigate(['/entity'])
+      },
       error: (err) => {
         if (err.error?.message) {
           this.error = err.error.message;
         } else {
-          this.error = "Un unexpected error has occourred."
+          this.error = "An unexpected error has occurred."
         }
         this.loading = false;
       },

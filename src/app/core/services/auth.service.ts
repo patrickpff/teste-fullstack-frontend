@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment.development';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { BehaviorSubject, Observable, switchMap, tap } from 'rxjs';
 
 interface AuthResponse {
   access_token: string;
@@ -27,7 +27,8 @@ export class AuthService {
   public currentUser$: Observable<User | null> = this.currentUserSubject.asObservable();
   
   // Token in memory
-  private token: string | null = null;
+  private tokenSubject = new BehaviorSubject<string | null>(null);
+  public token$ = this.tokenSubject.asObservable()
 
   constructor(private http: HttpClient) {}
 
@@ -39,31 +40,35 @@ export class AuthService {
 
     return this.http.post<AuthResponse>(this.apiUrl, body).pipe(
       tap((res) => {
-        this.token = res.access_token;
-
+        this.tokenSubject.next(res.access_token);
         this.fetchUser().subscribe();
       })
     )
   }
 
   logout() {
-    // TODO: implement logout
+    this.tokenSubject.next(null);
+    this.currentUserSubject.next(null);
   }
 
   private fetchUser(): Observable<User> {
     const url = `${environment.apiUrl}/user`
 
-    return this.http.get<User>(url, {
-      headers: {
-        Authorization: `Bearer ${this.getToken()}`,
-      }
-    }).pipe(
+    return this.token$.pipe(
+      tap((token) => {
+        if (!token) throw new Error('No token found');
+      }),
+      switchMap((token) =>
+        this.http.get<User>(url, {
+          headers: { Authorization: `Bearer ${token}` }
+        })
+      ),
       tap((user) => this.currentUserSubject.next(user))
     );
   }
 
   getToken(): string | null {
-    return this.token;
+    return this.tokenSubject.value;
   }
 
   getCurrentUser(): User | null {
@@ -71,6 +76,6 @@ export class AuthService {
   }
 
   isLoggedIn(): boolean {
-    return this.currentUserSubject.value != null;
+    return !!this.currentUserSubject.value;
   }
 }

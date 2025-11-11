@@ -1,0 +1,51 @@
+.entity-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.entity-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.entity-table th,
+.entity-table td {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid #eee;
+    text-align: left;
+}
+
+.entity-table th {
+    background-color: #f9fafb;
+    font-weight: 600;
+}
+
+.icon {
+    border: none;
+    background-color: none;
+    cursor: pointer;
+    color: #333;
+    transition: color 0.2s;
+}
+
+.icon:hover {
+    color: #2b3a67;
+}
+.icon.delete {
+    color: #e00000;
+}
+
+.icon.delete:hover {
+    color: #9f0303;
+}

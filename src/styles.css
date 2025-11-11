@@ -53,6 +53,10 @@ button {
   transition: background-color var(--transition-speed);
 }
 
+button ng-icon {
+  font-weight: bolder;
+}
+
 button:hover {
   background-color: #4338ca;
 }

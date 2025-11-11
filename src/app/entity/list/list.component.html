@@ -1,1 +1,44 @@
-<p>list works!</p>
+<div class="entity-list">
+    <div class="header">
+        <h2>Entities</h2>
+        <button (click)="newEntity()">
+            <ng-icon name="heroPlus"></ng-icon>
+            New entity
+        </button>
+    </div>
+
+    <div *ngIf="loading" class="loading">Loading...</div>
+    <div class="error">{{ error }}</div>
+
+    <!-- <table *ngIf="!loading && entities.length" class="entity-table"> -->
+    <table class="entity-table">
+        <thead>
+            <tr>
+                <th>Corporate Name</th>
+                <th>Trade Name</th>
+                <th>CNPJ</th>
+                <th>Region</th>
+                <th>Inauguration</th>
+                <th>Active</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr *ngFor="let entity of entities">
+                <td>{{ entity.corporate_name }}</td>
+                <td>{{ entity.trade_name }}</td>
+                <td>{{ entity.cnpj }}</td>
+                <td>{{ entity.region.name }}</td>
+                <td>{{ entity.inauguration_date }}</td>
+                <td>{{ entity.active }}</td>
+                <td>
+                    Actions here
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <p *ngIf="!loading && !entities.length" class="empty">
+        There's no entities registred.
+    </p>
+</div>
