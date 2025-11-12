@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
+import { AuthService } from './core/services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -9,5 +10,12 @@ import { RouterOutlet } from '@angular/router';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'teste-fullstack-frontend';
+  constructor(private authService: AuthService, private router: Router) {}
+
+  ngOnInit() {
+    this.authService['fetchUser']()?.subscribe({
+      next: () => console.log("Authenticated user restaured"),
+      error: () => this.router.navigate(['/login'])
+    })
+  }
 }

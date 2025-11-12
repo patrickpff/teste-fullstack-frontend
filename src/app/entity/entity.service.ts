@@ -32,15 +32,6 @@ export class EntityService {
   
   getAll(): Observable<Entity[]> {
     console.log("get entities")
-    return this.authService.token$.pipe(
-      tap(token => console.log("token now:", token)),
-      filter((token): token is string => !!token),
-      take(1),
-      switchMap((token) => 
-        this.http.get<Entity[]>(this.baseUrl, {
-          headers: {Authorization: `Bearer ${token}`}
-        })
-      )
-    )
+    return this.http.get<Entity[]>(this.baseUrl, { withCredentials: true });
   }
 }

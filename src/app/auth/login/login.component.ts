@@ -56,13 +56,9 @@ export class LoginComponent {
 
     const {username, password} = this.loginForm.value;
     
-    this.authService.login(username, password).pipe(
-      switchMap(() => this.authService.token$.pipe(
-        filter((token): token is string => !!token),
-        take(1)
-      ))
-    ).subscribe({
+    this.authService.login(username, password).subscribe({
       next: () => {
+        console.log("It worked!")
         this.router.navigate(['/entity'])
       },
       error: (err) => {

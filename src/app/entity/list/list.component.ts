@@ -23,6 +23,7 @@ export class ListComponent {
   constructor(private entityService: EntityService, private router: Router) {}
 
   ngOnInit () {
+    console.log("Load entities")
     this.entityService.getAll().subscribe({
       next: (data) => (this.entities = data),
       error: (err) => (this.error = err.message || 'Error to load entities'),
