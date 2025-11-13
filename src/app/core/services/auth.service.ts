@@ -62,17 +62,9 @@ export class AuthService {
   /**
    * Logout and clear memory
    */
-  logout() {
-    return this.http.post(
-      this.logoutUrl,
-      {},
-      { withCredentials: true }
-    ).pipe(
-      tap(() => {
-        this._isLoggedIn.next(false);
-        this.router.navigate(['/login']);
-      })
-    )
+  logout(): void {
+    document.cookie = 'access_token=; Max-Age=0; path=/;';
+    document.cookie = 'refresh_token=; Max-Age=0; path=/;';
   }
 
   /**
@@ -98,5 +90,9 @@ export class AuthService {
         }
       })
     )
+  }
+  
+  checkSession() {
+    return this.http.get<boolean>('/api/check-session', { withCredentials: true })
   }
 }

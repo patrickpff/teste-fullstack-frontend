@@ -40,6 +40,7 @@ export class FormComponent implements OnInit {
         active: [true],
         region_id: ['', Validators.required]
       });
+      this.loadRegions()
   }
 
   loadRegions(): void {
@@ -76,6 +77,19 @@ export class FormComponent implements OnInit {
       this.form.markAllAsTouched()
       return
     }
-    // TODO: call backend
+    const entity = this.form.value
+    this.loading = true
+
+    if (this.isEdit) {
+      this.entityService.update(this.form.value.id, entity).subscribe({
+        next: () => this.router.navigate(['/entity']),
+        error: (err) => console.error("Erro ao atualizar entidade:", err)
+      })
+    } else {
+      this.entityService.store(entity).subscribe({
+        next: () => this.router.navigate(['/entity']),
+        error: (err) => console.error('Erro ao criar entidade', err)
+      })
+    }
   }
 }

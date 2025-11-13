@@ -1,30 +1,32 @@
 <div class="entity-list">
     <div class="header">
-        <h2>Entities</h2>
+        <h2>Entidades</h2>
         <a routerLink="/entity/new" class="btn-primary">
             <ng-icon name="heroPlus"></ng-icon>
-            New entity
+            Nova Entidade
         </a>
     </div>
 
-    <div *ngIf="loading" class="loading">Loading...</div>
+    <div *ngIf="loading" class="loading">Carregando...</div>
     <div class="error">{{ error }}</div>
 
-    <!-- <table *ngIf="!loading && entities.length" class="entity-table"> -->
-    <table class="entity-table">
+    <table *ngIf="!loading" class="entity-table">
         <thead>
             <tr>
-                <th>Corporate Name</th>
-                <th>Trade Name</th>
+                <th>Razão social</th>
+                <th>Nome fantasia</th>
                 <th>CNPJ</th>
-                <th>Region</th>
-                <th>Inauguration</th>
-                <th>Active</th>
+                <th>Região</th>
+                <th>Data de inauguração</th>
+                <th>Ativo</th>
                 <th>Actions</th>
             </tr>
         </thead>
 
         <tbody>
+            <tr *ngIf="entities.length === 0">
+                <td colspan="7">Ainda não existem entidades cadastradas</td>
+            </tr>
             <tr *ngFor="let entity of entities">
                 <td>{{ entity.corporate_name }}</td>
                 <td>{{ entity.trade_name }}</td>
@@ -39,6 +41,6 @@
         </tbody>
     </table>
     <p *ngIf="!loading && !entities.length" class="empty">
-        There's no entities registred.
+        Não existem entidades registradas.
     </p>
 </div>

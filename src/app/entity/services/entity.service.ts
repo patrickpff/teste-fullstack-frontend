@@ -17,12 +17,11 @@ export class EntityService {
   ) {}
   
   getAll(): Observable<Entity[]> {
-    console.log("get entities")
     return this.http.get<Entity[]>(this.baseUrl, { withCredentials: true });
   }
 
   store(entity: Entity): Observable<Entity> {
-    return this.http.post<Entity>(this.baseUrl, entity, {withCredentials: true})
+    return this.http.post<Entity>(this.baseUrl, entity, { withCredentials: true })
   }
 
   update (id: number, entity: Entity): Observable<Entity> {

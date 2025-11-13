@@ -3,11 +3,7 @@ import { Injectable } from '@angular/core';
 import { AuthService } from '../../core/services/auth.service';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment.development';
-
-export interface Region {
-  id: number;
-  name: string;
-}
+import { Region } from '../../models/region.model';
 
 @Injectable({
   providedIn: 'root'

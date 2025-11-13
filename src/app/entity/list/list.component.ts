@@ -25,6 +25,7 @@ export class ListComponent {
 
   ngOnInit () {
     console.log("Load entities")
+    this.loading = true;
     this.entityService.getAll().subscribe({
       next: (data) => (this.entities = data),
       error: (err) => (this.error = err.message || 'Error to load entities'),
