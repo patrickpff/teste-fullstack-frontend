@@ -2,13 +2,14 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { heroPlus } from '@ng-icons/heroicons/outline';
-import { EntityService } from '../entity.service';
-import { Router } from '@angular/router';
+import { EntityService } from '../services/entity.service';
+import { Router, RouterLink, RouterOutlet } from '@angular/router';
+import { FormComponent } from '../form/form.component';
 
 @Component({
   selector: 'app-list',
   standalone: true,
-  imports: [NgIconComponent, CommonModule],
+  imports: [NgIconComponent, CommonModule, RouterLink, RouterOutlet, FormComponent],
   providers: [
       provideIcons({heroPlus})
   ],

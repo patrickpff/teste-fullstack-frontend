@@ -1,1 +1,46 @@
-<p>form works!</p>
+<section class="entity-form">
+    <header>
+        <h1>{{ isEdit ? 'Edit Entity' : 'New Entity' }}</h1>
+    </header>
+
+    <form [formGroup]="form" (ngSubmit)="submit()">
+        <div class="form-group">
+            <label for="corporate_name">Razão Social</label>
+            <input type="text" id="corporate_name" formControlName="corporate_name" />
+        </div>
+        <div class="form-group">
+            <label for="trade_name">Nome Fantasia</label>
+            <input type="text" id="trade_name" formControlName="trade_name" />
+        </div>
+        <div class="form-group">
+            <label for="cnpj">CNPJ</label>
+            <input type="text" id="cnpj" formControlName="cnpj" maxlength="18" (input)="onCnpjInput($event)"
+                placeholder="00.000.000/0000-00" />
+        </div>
+        <div class="form-group">
+            <label for="inauguration_date">Data de Inauguração</label>
+            <input type="date" id="inauguration_date" formControlName="inauguration_date" />
+        </div>
+        <div class="form-group">
+            <label for="region_id">Região</label>
+            <select id="region_id" formControlName="region_id">
+                <option value="">Selecione...</option>
+                <option *ngFor="let region of regions" [value]="region.id">
+                    {{ region.name }}
+                </option>
+            </select>
+        </div>
+        <div class="form-checkbox">
+            <input type="checkbox" id="active" formControlName="active" />
+            <label for="active">Active</label>
+        </div>
+
+        <p *ngIf="error" class="form-error">{{ error }}</p>
+
+        <footer class="form-actions">
+            <button type="submit" [disabled]="loading">
+                {{ isEdit ? 'Save Entity' : 'Create Entity' }}
+            </button>
+        </footer>
+    </form>
+</section>

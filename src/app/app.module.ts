@@ -7,6 +7,7 @@ import { HttpClientModule } from "@angular/common/http";
 import { CommonModule } from "@angular/common";
 import { NgIconsModule } from "@ng-icons/core";
 import { heroEye, heroLockClosed } from '@ng-icons/heroicons/outline';
+import { ReactiveFormsModule } from "@angular/forms";
 
 @NgModule({
     declarations: [
@@ -17,7 +18,8 @@ import { heroEye, heroLockClosed } from '@ng-icons/heroicons/outline';
         BrowserModule,
         AppRoutingModule,
         HttpClientModule,
-        CommonModule
+        CommonModule,
+        ReactiveFormsModule
     ],
     providers: [],
     bootstrap: [AppComponent]

@@ -53,6 +53,18 @@ button {
   transition: background-color var(--transition-speed);
 }
 
+/* Buttons */
+.btn-primary {
+  background-color: var(--primary-color);
+  color: #fff;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color var(--transition-speed);
+}
+
 button ng-icon {
   font-weight: bolder;
 }

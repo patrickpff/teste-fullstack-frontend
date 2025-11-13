@@ -1,10 +1,10 @@
 <div class="entity-list">
     <div class="header">
         <h2>Entities</h2>
-        <button (click)="newEntity()">
+        <a routerLink="/entity/new" class="btn-primary">
             <ng-icon name="heroPlus"></ng-icon>
             New entity
-        </button>
+        </a>
     </div>
 
     <div *ngIf="loading" class="loading">Loading...</div>
