@@ -1,27 +1,99 @@
-# TesteFullstackFrontend
+# Teste Fullstack Frontend
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.17.
+This repository contains the **frontend** for the Fullstack Challenge.  
+It was developed using **Angular 17** and communicates with the backend API built in **Laravel** (see [teste-fullstack-backend](https://github.com/patrickpff/teste-fullstack-backend)).
 
-## Development server
+The application includes authentication with **HTTP-only cookies**, route protection, and full CRUD operations for entities.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+> 🧩 Challenge reference: [Teste Full Stack](https://github.com/gerfinanceirosolucoes/teste-full-stack)
 
-## Code scaffolding
+---
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## 🚀 Technologies
 
-## Build
+- **Angular 17**
+- **TypeScript**
+- **RxJS**
+- **Angular Router**
+- **Reactive Forms**
+- **Custom CSS styling (no external UI frameworks)**
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+---
 
-## Running unit tests
+## 📦 Project Setup
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Clone this repository and install dependencies:
 
-## Running end-to-end tests
+```bash
+git clone https://github.com/yourusername/teste-fullstack-frontend.git
+cd teste-fullstack-frontend
+npm install
+```
+---
+## 🧠 Environment Configuration
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+Before running the application, create the environment configuration file:
 
-## Further help
+```bash
+src/environments/environment.development.ts
+```
+Add your backend API URL:
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+```
+export const environment = {
+  production: false,
+  apiUrl: 'http://localhost:8000/api' // or the backend URL
+};
+```
+
+If you are using Docker-Laravel for the backend, make sure the API is reachable from your frontend environment (for example, http://localhost:8000/api).
+
+🧩 Running the Application
+
+To start the development server:
+
+```
+npm start
+```
+
+Then open http://localhost:4200 in your browser.
+
+--- 
+
+## 🔐 Authentication (via Cookies)
+
+This application uses cookie-based authentication instead of localStorage or sessionStorage.
+
+After login, the backend sends secure HTTP-only cookies containing the access and refresh tokens.
+
+All subsequent API requests automatically include those cookies (withCredentials: true).
+
+The frontend checks authentication state using the /user endpoint and guards routes accordingly.
+
+Make sure your backend is configured to allow credentials and CORS properly:
+
+```
+'paths' => ['api/*', 'sanctum/csrf-cookie'],
+'allowed_origins' => ['http://localhost:4200'],
+'supports_credentials' => true,
+```
+---
+
+## 🐳 Integration with Docker-Laravel Backend
+
+If you are running the backend using **[Docker-Laravel](https://github.com/patrickpff/docker-laravel)** — a custom Docker environment maintained by the author — it is already preconfigured to work seamlessly with this frontend.
+
+If you are using a different Docker setup or local server, make sure your backend exposes port 80 or 8000, and update your environment file accordingly:
+
+```
+apiUrl: 'http://localhost/api'
+```
+The frontend will then communicate with the Laravel backend seamlessly using cookies.
+
+---
+## 📄 License
+
+This project is part of a coding challenge and is shared for educational purposes.
+
+--- 
+Made with ❤️ to demonstrate secure fullstack development using Angular 17 and Laravel, with authentication handled exclusively through HTTP-only cookies.
