@@ -19,7 +19,7 @@
                 <th>Região</th>
                 <th>Data de inauguração</th>
                 <th>Ativo</th>
-                <th>Actions</th>
+                <th>Ações</th>
             </tr>
         </thead>
 
@@ -32,10 +32,15 @@
                 <td>{{ entity.trade_name }}</td>
                 <td>{{ entity.cnpj }}</td>
                 <td>{{ entity.region.name }}</td>
-                <td>{{ entity.inauguration_date }}</td>
-                <td>{{ entity.active }}</td>
+                <td>{{ entity.inauguration_date | date:'dd/MM/yyyy' }}</td>
+                <td>{{ entity.active ? 'Ativo' : 'Inativo' }}</td>
                 <td>
-                    Actions here
+                    <button (click)="onEdit(entity.id)" class="btn-action" [disabled]="loading">
+                        <ng-icon name="heroPencilSquare"></ng-icon>
+                    </button>
+                    <button (click)="onDelete(entity.id)" class="btn-action delete" [disabled]="loading">
+                        <ng-icon name="heroTrash"></ng-icon>
+                    </button>
                 </td>
             </tr>
         </tbody>

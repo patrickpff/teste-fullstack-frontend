@@ -31,21 +31,21 @@
     font-weight: 600;
 }
 
-.icon {
+.btn-action {
     border: none;
-    background-color: none;
+    background-color: transparent;
     cursor: pointer;
     color: #333;
     transition: color 0.2s;
 }
 
-.icon:hover {
+.btn-action:hover {
     color: #2b3a67;
 }
-.icon.delete {
+.btn-action.delete {
     color: #e00000;
 }
 
-.icon.delete:hover {
+.btn-action.delete:hover {
     color: #9f0303;
 }

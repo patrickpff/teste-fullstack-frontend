@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
-import { heroPlus } from '@ng-icons/heroicons/outline';
+import { heroPlus, heroTrash, heroPencilSquare } from '@ng-icons/heroicons/outline';
 import { EntityService } from '../services/entity.service';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { FormComponent } from '../form/form.component';
@@ -11,7 +11,7 @@ import { FormComponent } from '../form/form.component';
   standalone: true,
   imports: [NgIconComponent, CommonModule, RouterLink, RouterOutlet, FormComponent],
   providers: [
-      provideIcons({heroPlus})
+      provideIcons({ heroPlus, heroTrash, heroPencilSquare })
   ],
   templateUrl: './list.component.html',
   styleUrl: './list.component.css'
@@ -33,5 +33,21 @@ export class ListComponent {
     })
   }
 
-  newEntity = () => {}
+  onEdit = (id: number) => {
+    this.router.navigate(['/entity/edit', id])
+  }
+
+  onDelete = (id: number) => {
+    if(confirm('Tem certeza que deseja excluir esta entidade?')) {
+      this.entityService.delete(id).subscribe({
+        next: () => {
+          this.entities = this.entities.filter(entity => entity.id !== id)
+        },
+        error: (err) => {
+          console.error('Erro ao excluir entidade', err)
+          alert('Erro ao excluir entidade')
+        }
+      })
+    }
+  }
 }

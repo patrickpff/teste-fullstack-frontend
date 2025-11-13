@@ -16,9 +16,10 @@ import { Region } from '../../models/region.model';
 })
 export class FormComponent implements OnInit {
   form!: FormGroup;
+  id!: number;
   isEdit: boolean = false;
   regions: Region[] = [];
-  error = null;
+  error: string | null = null;
   loading = false;
 
   constructor(
@@ -40,7 +41,33 @@ export class FormComponent implements OnInit {
         active: [true],
         region_id: ['', Validators.required]
       });
+
       this.loadRegions()
+      
+      const idParameter = this.route.snapshot.paramMap.get('id');
+
+      if(idParameter) {
+        this.isEdit = true
+        this.id = +idParameter
+        this.loadEntity()
+      }
+  }
+
+  loadEntity() {
+    this.form.disable()
+    this.loading = true;
+    this.entityService.getById(this.id).subscribe({
+      next: (entity) => {
+        this.form.patchValue(entity)
+        this.form.enable()
+        this.loading = false
+      },
+      error: (err) => {
+        console.error(err)
+        this.error = 'Erro ao carregar entidade'
+        this.loading = false
+      }
+    })
   }
 
   loadRegions(): void {
@@ -81,7 +108,7 @@ export class FormComponent implements OnInit {
     this.loading = true
 
     if (this.isEdit) {
-      this.entityService.update(this.form.value.id, entity).subscribe({
+      this.entityService.update(this.id, entity).subscribe({
         next: () => this.router.navigate(['/entity']),
         error: (err) => console.error("Erro ao atualizar entidade:", err)
       })
